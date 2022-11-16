@@ -1,11 +1,26 @@
+import { error } from 'daisyui/src/colors/colorNames';
+import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../contexts/AuthProvider';
 
 const Login = () => {
-    const { register, formState: { errors }, handleSubmit } = useForm()
+    const { register, formState: { errors }, handleSubmit } = useForm();
+    const { signIn } = useContext(AuthContext);
+    const [loginError, setLoginError] = useState('')
+
 
     const handleLogin = data => {
         console.log(data);
+        signIn(data.email, data.password)
+            .then(result => {
+                const user = result.user;
+                console.log(user);
+            })
+            .catch(error => {
+                console.log(error.message)
+                setLoginError(error.message)
+            });
     }
 
 
@@ -33,6 +48,10 @@ const Login = () => {
                         {errors.password && <p className='text-red-600'>{errors.password?.message}</p>}
                     </div>
                     <input type="submit" className="btn btn-accent w-full" value="login" />
+                    <div>
+                        {loginError && <p className='text-red-600'> {loginError}</p>}
+
+                    </div>
                 </form>
                 <p className='mt-2 '>New to Doctors Portal? <Link to={'/signup'} className='text-secondary'>Create new account</Link></p>
                 <div className="divider">OR</div>
