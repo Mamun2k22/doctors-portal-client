@@ -33,7 +33,7 @@ const AuthProvider = ({ children }) => {
     }
     // Update User
     const updateUser = (userInfo) => {
-        return updateProfile(user, userInfo)
+        return updateProfile(auth.currentUser, userInfo)
     }
 
     // UseEffect

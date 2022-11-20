@@ -7,7 +7,7 @@ function App() {
   return (
     <div className='mx-10' >
       <RouterProvider router={router}>
-        <Toaster></Toaster>
+        <Toaster />
 
       </RouterProvider>
 
